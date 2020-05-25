@@ -1,15 +1,18 @@
 
-Specification for AX.25 KISS over BLE (Bluetooth Low Energy)
+Specification for KISS over BLE (Bluetooth Low Energy)
 ================================================================
 
 Introduction
 ---------------
 
-This is a specification for transmitting AX.25 frames using the KISS
-protocol over BLE (Bluetooth Low Energy).  BLE is important because
-Apple iOS (iPhones, iPads) does not allow apps to talk to USB devices
-or classic Bluetooth devices (Bluetooth Serial profile).  Apps can,
-however, talk to BLE devices just fine.
+This is a specification for transmitting frames using the KISS
+protocol over BLE (Bluetooth Low Energy).  Typically KISS is used for
+exchanging AX.25 packet radio frames with a KISS TNC but other link layers
+than AX.25 can also be used.
+
+BLE is important because Apple iOS (iPhones, iPads) does not allow apps to
+talk to USB devices or classic Bluetooth devices (Bluetooth Serial profile). 
+Apps can, however, talk to BLE devices just fine.
 
 BLE is available to Android and other devices just as well. It's just that
 on iOS there's no other option.
@@ -94,7 +97,7 @@ KISS frames later on.
 Receiving KISS frames from a BLE TNC
 ---------------------------------------
 
-Received AX.25 frames are transferred KISS encoded raw byte arrays on the
+Received frames are transferred KISS encoded raw byte arrays on the
 KTS_RX_CHAR_UUID peripheral.
 
 Since the length of a BLE transfer (MTU) is limited, a KISS frame may span
@@ -102,12 +105,12 @@ multiple BLE transfer units.  Likewise, a single BLE transfer may contain
 more than one small KISS frame, or the tail and beginning of two larger KISS
 frames.
 
-A BLE TNC shall wrap received binary AX.25 frames in a KISS frame and escape
-any KISS FEND packets appearing in the AX.25 frame as specified by the KISS
+A BLE TNC shall wrap received binary frames in a KISS frame and escape
+any KISS FEND packets appearing in the frame as specified by the KISS
 protocol.  The KISS frames shall then be sent on the KTS_RX_CHAR_UUID
 peripheral, back to back.
 
-A TNC MUST be capable of splitting a larger AX.25 frame to multiple BLE
+A TNC MUST be capable of splitting a larger frame to multiple BLE
 transfer units, should the frame be larger than a BLE transfer unit.  The
 TNC MAY optionally be capable of inserting another KISS frame, or the
 beginning of a frame, if there's space in the BLE transfer unit after the
@@ -141,16 +144,15 @@ in AX.25 2.2.  This can not be done for UI frames which are used in APRS.
 Transmitting KISS frames via a BLE TNC
 -----------------------------------------
 
-Similar to the receive path, transmitted AX.25 frames are sent by the
-application, KISS encoded, as binary byte arrays, on the KTS_TX_CHAR_UUID
-characteristic.
+Similar to the receive path, transmitted frames are sent by the application,
+KISS encoded, as binary byte arrays, on the KTS_TX_CHAR_UUID characteristic.
 
 Longer frames are split into multiple BLE transfer units.  Each unit may
 contain multiple KISS frames.  The beginning of the next KISS frame may be
 used to fill the BLE data transfer unit right after the end of the previous
 frame, so the TNC must assemble received BLE messages in a buffer and parse
-out KISS encoded AX.25 frames as if the buffer was being filled from a
-serial line.
+out KISS encoded frames as if the buffer was being filled from a serial
+line.
 
 Likewise, the buffer length requirements described above apply for the
 transmit buffer in the TNC.  As the radio interface is usually quite slow
@@ -187,21 +189,51 @@ Expanding the protocol, vendor extensions
 
 If the TNC or radio implementing BLE needs to have features such as rig
 control and configuration, such protocols can be implemented by adding
-custom characteristics with a vendor-selected random UUID.  Just generate a
-random UUIDv4 to identify the characteristic.  This gives you a free
-playground without fear of collisions which would be more likely if
-extensions would be developed on the KISS layer.
+custom characteristics and services with a vendor-specific UUID.  This gives
+you a free playground without fear of collisions which would be more likely
+if extensions would be developed on the KISS layer.
+
+As a BLE device may announce supporting multiple services, a BLE KISS device
+may list both KTS_SERVICE_UUID and a vendor-specific UUID to indicate
+support for an extension. This is preferred instead of string matching with
+the device or manufacturer name.
 
 If you wish to provide an open protocol for extended features like this,
 please submit a pull request to document it here.  This will help other
-apps to support your hardware.
+apps support your hardware.
 
 For example, if SMACK, TNC2 command mode, or other alternate protocol needs
 to be implemented, separate characteristic UUIDs should be used.
 
+The BLE specification would allow selecting any random UUID, but if a Nordic
+Semiconductor BLE module is used, only the third and fourth octet of the
+UUID may vary.  If you're using a Nordic chip or another chip with a
+similar restriction, please select a random 10-bit integer (in the range
+1...1023) to use as your vendor code, and request for it to be allocated to
+you in this document by making a github ticket. Vendor code 0 is allocated
+for services and characteristics specified in this document.
 
-Final notes
---------------
+To pick vendor UUIDs for services and characteristics:
+
+* Generate a 16-bit integer where the high 10 bits are your vendor code, and
+  low 6 bits identify your own characteristic. The 16-bit integer goes to
+  the 3rd and 4th octet of the UUID, marked with V in this example UUID:
+  0000VVVV-ba2a-46c9-ae49-01b0961f68bb
+* Use 0 for the low 6 bits for the first characteristic or service, 6-bit
+  integer value of 1 for the second UUID and so on. You'll get 64 UUIDs
+  for the vendor code, each of which can be used for either a characteristic
+  or a service.  If you run out, you can allocate a second vendor code.
+* For example, for a vendor code of 595, the 16-bit integer for service 0
+  would be (513 << 6) == 0x94c0, resulting in the first UUID of
+  000094c0-ba2a-46c9-ae49-01b0961f68bb.
+* The second and third UUIDs for vendor code of 595 would have octets of
+  (513 << 6) | 1 == 0x94c1 and (513 << 6) | 2 == 0x94c2, resulting in
+  UUIDs of 000094c1-ba2a-46c9-ae49-01b0961f68bb and
+  000094c2-ba2a-46c9-ae49-01b0961f68bb.
+
+
+Implementation examples
+--------------------------
 
 Rob Riggs of Mobilinkd has kindly published the TNC3 firmware as open
 source.  Note that it is licensed under the GPLv3, so if you incorporate his
@@ -214,6 +246,12 @@ bugs when you ship!
 
 https://github.com/mobilinkd/tnc3-firmware
 
+The Mobilinkd TNC3 iOS Config App source code is also available under the Apache
+license. It implements the TNC discovery and connection phases, and enough
+KISS to configure TNC hardware parameters.
+
+https://github.com/mobilinkd/iosTncConfig
+
 
 References
 -------------
@@ -223,5 +261,5 @@ References
 * Getting Started with Bluetooth Low Energy:
   https://www.oreilly.com/library/view/getting-started-with/9781491900550/ch04.html
 * KISS: https://en.wikipedia.org/wiki/KISS_(TNC)
+* KISS specification: http://www.ax25.net/kiss.aspx
 * AX.25 v2.2: https://www.tapr.org/pdf/AX25.2.2.pdf
-
