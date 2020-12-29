@@ -34,7 +34,6 @@ and the user does not need to know which IPs or ports are being used.
 
 Example code for the TNC side can be found in the references below.
 
-![DNS-SD on iPhone](images/tcp-kiss-dns-sd-iphone.png?raw=true)
 
 Specification
 ----------------
@@ -144,4 +143,13 @@ References
 * RFC 6763, DNS-SD: https://tools.ietf.org/html/rfc6763
 * Pull Request to add DNS-SD support to Dire Wolf, example code for Linux
   and MacOS: https://github.com/wb2osz/direwolf/pull/307
+
+
+Example of an user interface
+--------------------------------
+
+The aprs.fi iOS app supports KISS TNCs on a WiFi, discovered using DNS-SD.
+BLE and TCP KISS TNCs can be connected by simply selecting them from a list.
+
+![DNS-SD on iPhone](images/tcp-kiss-dns-sd-iphone.png?raw=true)
 
