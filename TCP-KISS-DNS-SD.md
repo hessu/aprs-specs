@@ -20,7 +20,9 @@ complicated when connecting to a device on the local network with dynamic
 DHCP-assigned IP addresses.
 
 In 2021 it is time to make one of these things a bit easier, and start
-using DNS Service Discovery (RFC 6763 DNS-SD) over Multicast DNS (RFC 6762)
+using DNS Service Discovery
+([RFC 6763 DNS-SD](https://tools.ietf.org/html/rfc6762)) over Multicast DNS
+([RFC 6762](https://tools.ietf.org/html/rfc6763))
 for locating KISS TNCs attached to the local network.
 
 DNS-SD libraries exist for all relevant operating systems.  Finding DNS-SD
