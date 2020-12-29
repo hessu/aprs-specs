@@ -34,6 +34,7 @@ and the user does not need to know which IPs or ports are being used.
 
 Example code for the TNC side can be found in the references below.
 
+![DNS-SD on iPhone](images/tcp-kiss-dns-sd-iphone.png?raw=true)
 
 Specification
 ----------------
@@ -141,5 +142,6 @@ References
 
 * RFC 6762, mDNS / Multicast DNS: https://tools.ietf.org/html/rfc6762
 * RFC 6763, DNS-SD: https://tools.ietf.org/html/rfc6763
-* Pull Request to add DNS-SD support to Dire Wolf: https://github.com/wb2osz/direwolf/pull/307
+* Pull Request to add DNS-SD support to Dire Wolf, example code for Linux
+  and MacOS: https://github.com/wb2osz/direwolf/pull/307
 
