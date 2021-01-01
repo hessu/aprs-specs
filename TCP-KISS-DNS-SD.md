@@ -8,7 +8,7 @@ Specification for user-friendly DNS-SD discovery of KISS over TCP
 
 *127.0.0.1:8001 or 127.0.0.1:8042? TCP or UDP?*
 
-PROPOSAL 2020-12-29
+PROPOSAL 2021-01-01 - added note on UTF-8 and further command line examples
 
 Heikki Hannikainen, OH7LZB
 
@@ -46,7 +46,13 @@ Specification
 
 KISS TNCs providing a TCP socket server on a LAN shall announce their
 presence, and the port being listened on, using mDNS DNS-SD with the
-"_kiss-tnc._tcp" service in the "local." domain.
+**"_kiss-tnc._tcp" service** in the **"local." domain**.
+
+As per RFC 6763, the **instance name** is an user-friendly UTF-8 encoded
+Unicode name of the TNC.  Devices with some sort of configuration interface
+SHOULD allow configuration of the **instance name** and permit use of
+non-ASCII unicode characters.  Client applications MUST handle devices
+having non-ASCII unicode characters in the **instance name**.
 
 
 User-friendly names
@@ -56,9 +62,12 @@ The **instance name** of each KISS TNC SHOULD be user-friendly, containing the
 name of the software or the model and manufacturer of the device.  A few
 examples of good names:
 
-* ACME SuperTNC
+* ACME SüperTNC in 日本
 * WinDSPTnc on NameOfServer
 * Dire Fox on raspberrypi
+
+Note how the last two examples default to including the user-configured
+hostname of the computer as a part of the **instance name**.
 
 As per [RFC 6763 Appendix C](https://tools.ietf.org/html/rfc6763#appendix-C),
 the name of the TNC SHOULD NOT, by default, contain random hexadecimal
@@ -140,6 +149,34 @@ And finally the IP address:
      9:33:13.662  ...STARTING...
     Timestamp     A/R    Flags if Hostname            Address       TTL
      9:33:13.662  Add 40000002  6 Hessu-mac-2.local.  10.0.0.42     120
+
+If you have a TNC which does not yet know how to do the announcement, you
+can publish a service from the Linux command line.  Alternatively, a service
+can be configured for announcement by placing a configuration file in
+/etc/avahi/services/.
+
+    # service running on this host
+    #   avahi-publish [options] -s <name> <type> <port>
+    avahi-publish -s "My Amazing TNC in Åland" _kiss-tnc._tcp 8001
+    #
+    # proxy announcement, service is running on another host instead of this
+    # one, so we provide its hostname
+    avahi-publish -H otherhosthost.local. -s "My Amazing TNC in Åland" \
+        _kiss-tnc._tcp 8001
+    # and then announce the IP address for that host
+    avahi-publish -a another-host.local. 10.0.0.55
+
+On a Mac, publishing a service from the command line:
+
+    # service running on this host
+    #  dns-sd -R name type domain port
+    sudo dns-sd -R "KISS TNC on the attic" _kiss-tnc._tcp local 8001
+    #
+    # proxy announcement, service is running on another host instead of this
+    # one, so we provide its hostname and IP address
+    #  dns-sd -P name type domain port host IP
+    sudo dns-sd -P "KISS TNC on the attic" _kiss-tnc._tcp local 8001 \
+        otherhost.local. 10.0.0.55
 
 
 References
