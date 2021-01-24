@@ -54,6 +54,14 @@ SHOULD allow configuration of the **instance name** and permit use of
 non-ASCII unicode characters.  Client applications MUST handle devices
 having non-ASCII unicode characters in the **instance name**.
 
+A TNC MAY publish symbolic names of ports using a TXT record of *pn* having
+a comma-separated list of UTF-8 encoded names.  This is useful in case of a
+multi-port TNC.  If a *pn* record does not exist, a client SHOULD assume
+that the TNC has a single port.  If a comma-separated list for *pn* is
+available, the number of values indicates the number of ports.
+
+   "pn=144.800 1200 bit/s,433.425 9600 bit/s"
+
 
 User-friendly names
 ----------------------
@@ -120,7 +128,7 @@ To resolve the IP addresses and ports on Linux:
     hostname = [Hessu-mac-2.local]
     address = [10.11.0.106]
     port = [8001]
-    txt = []
+    txt = ["pn=144.800 1200 bit/s,434.125 9600 bit/s"]
 
 On a Mac, the "dns-sd" tool will do the same.
 
@@ -156,26 +164,26 @@ can be configured for announcement by placing a configuration file in
 /etc/avahi/services/.
 
     # service running on this host
-    #   avahi-publish [options] -s <name> <type> <port>
-    avahi-publish -s "My Amazing TNC in Åland" _kiss-tnc._tcp 8001
+    #   avahi-publish [options] -s <name> <type> <port> <txt>
+    avahi-publish -s "My TNC" _kiss-tnc._tcp 8001 "pn=144.800 1200,434.125 9600"
     #
     # proxy announcement, service is running on another host instead of this
     # one, so we provide its hostname
     avahi-publish -H otherhosthost.local. -s "My Amazing TNC in Åland" \
-        _kiss-tnc._tcp 8001
+        _kiss-tnc._tcp 8001 "pn=144.800 1200,434.125 9600"
     # and then announce the IP address for that host
     avahi-publish -a another-host.local. 10.0.0.55
 
 On a Mac, publishing a service from the command line:
 
     # service running on this host
-    #  dns-sd -R name type domain port
-    sudo dns-sd -R "KISS TNC on the attic" _kiss-tnc._tcp local 8001
+    #  dns-sd -R name type domain port txt
+    dns-sd -R "KISS TNC on the attic" _kiss-tnc._tcp local 8001 "pn=Port 1,Port 2"
     #
     # proxy announcement, service is running on another host instead of this
     # one, so we provide its hostname and IP address
     #  dns-sd -P name type domain port host IP
-    sudo dns-sd -P "KISS TNC on the attic" _kiss-tnc._tcp local 8001 \
+    dns-sd -P "KISS TNC on the attic" _kiss-tnc._tcp local 8001 \
         otherhost.local. 10.0.0.55
 
 
