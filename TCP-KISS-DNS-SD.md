@@ -9,7 +9,9 @@ Specification for user-friendly DNS-SD discovery of KISS over TCP
 *127.0.0.1:8001 or 127.0.0.1:8042? TCP or UDP?*
 
 PROPOSAL
+
 2021-01-01 - added note on UTF-8 and further command line examples
+
 2021-01-25 - added method to describe multiport TNCs
 
 Heikki Hannikainen, OH7LZB
@@ -205,5 +207,4 @@ The aprs.fi iOS app supports KISS TNCs on a WiFi, discovered using DNS-SD.
 BLE and TCP KISS TNCs can be connected by simply selecting them from a list.
 
 ![DNS-SD on iPhone](images/tcp-kiss-dns-sd-iphone.png?raw=true)
-
 
