@@ -253,6 +253,25 @@ KISS to configure TNC hardware parameters.
 https://github.com/mobilinkd/iosTncConfig
 
 
+Known implementations
+------------------------
+
+Client applications:
+
+* aprs.fi APRS application (iPhone & iPad)
+* RadioMail WinLink messaging app (iPhone & iPad)
+* PocketPacket APRS app (iPhone & iPad)
+
+Radios and TNCs:
+
+* Mobilinkd TNC3
+* Mobilinkd TNC4
+* PicoAPRS v4 transceiver
+
+By supporting the BLE KISS API your device or application will be compatible
+with these existing implementations without any changes in those.
+
+
 References
 -------------
 
