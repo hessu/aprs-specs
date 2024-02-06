@@ -105,7 +105,7 @@ Debugging
 ------------
 
 Note that some APIs require you to pass the TCP port in *network byte order*
-when registering the DNS-SD announcement.  On Mac dnssd, netwoork byte
+when registering the DNS-SD announcement.  On Mac dnssd, network byte
 order; on Linux Avahi, host byte order.  Use htons() to do the conversion so
 that your code will work on both Big Endian and Little Endian computers.
 
@@ -203,7 +203,7 @@ References
 Example of an user interface
 --------------------------------
 
-The aprs.fi iOS app supports KISS TNCs on a WiFi, discovered using DNS-SD.
+The aprs.fi iOS app supports KISS TNCs via WiFi, discovered using DNS-SD.
 BLE and TCP KISS TNCs can be connected by simply selecting them from a list.
 
 ![DNS-SD on iPhone](images/tcp-kiss-dns-sd-iphone.png?raw=true)
