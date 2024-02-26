@@ -25,7 +25,7 @@ radio.
   * Example implementation: [Direwolf](https://github.com/wb2osz/direwolf/tree/dev/src)
     is open source, implementations included for MacOS and Linux (Avahi)
 * VARA HF modem launched with Varanny
-  * Service: `_varahf-modem._tcp`, `_varafm-modem._tcp`
+  * Service: `_vara-modem._tcp`
   * Implementations: varanny, RadioMail for iOS
   * Specification: [varanny](https://github.com/islandmagic/varanny)
   * Example implementations: [varanny](https://github.com/islandmagic/varanny)
