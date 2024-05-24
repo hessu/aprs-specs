@@ -259,7 +259,7 @@ Known implementations
 Client applications:
 
 * aprs.fi APRS application (iPhone & iPad)
-* RadioMail WinLink messaging app (iPhone & iPad)
+* RadioMail Winlink email app (iPhone & iPad)
 * PocketPacket APRS app (iPhone & iPad)
 
 Radios and TNCs:
@@ -269,6 +269,7 @@ Radios and TNCs:
 * PicoAPRS v4 transceiver
 * RPC Electronics ESP32-APRS Tracker
 * Richonguzman / CA2RXU LoRa APRS Tracker on TGO T-Beam and LoRa32v2.1 boards
+* [B.B. Link Adapter](https://getbblink.com) for Kenwood TH-D74/5 radios
 
 By supporting the BLE KISS API your device or application will be compatible
 with these existing implementations without any changes in those.
