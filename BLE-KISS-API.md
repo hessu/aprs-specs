@@ -11,7 +11,7 @@ exchanging AX.25 packet radio frames with a KISS TNC but other link layers
 than AX.25 can also be used.
 
 BLE is important because Apple iOS (iPhones, iPads) does not allow apps to
-talk to USB devices or classic Bluetooth devices (Bluetooth Serial profile). 
+talk to USB devices or classic Bluetooth devices (Bluetooth Serial profile).
 Apps can, however, talk to BLE devices just fine.
 
 BLE is available to Android and other devices just as well. It's just that
@@ -40,7 +40,7 @@ BLE KISS service UUID:
     KTS_SERVICE_UUID 00000001-ba2a-46c9-ae49-01b0961f68bb
 
 Notify, read KISS data:
-    
+
     KTS_RX_CHAR_UUID 00000003-ba2a-46c9-ae49-01b0961f68bb
 
 Write KISS data, response:
@@ -78,7 +78,7 @@ After establishing a connection to the BLE peripheral an application shall
 discover the services on that peripheral having the service UUID of
 KTS_SERVICE_UUID.  The TNC MUST provide one such service.
 
-The application shall then discover the characteristics for that service. 
+The application shall then discover the characteristics for that service.
 
 This document specifies two characteristics with UUIDs KTS_RX_CHAR_UUID and
 KTS_TX_CHAR_UUID, but more may be defined later.  Applications must ignore
@@ -120,12 +120,12 @@ to be transferred.
 An application receiving data from a BLE TNC MUST concatenate the received
 BLE transfer units in a buffer, and scan for complete KISS packets according
 to the KISS protocol by looking for a KISS FEND byte in the beginning and
-end of each KISS frame, just as if the data was coming from a serial line. 
+end of each KISS frame, just as if the data was coming from a serial line.
 The application must also handle KISS escaping according to the KISS
 protocol, as the data contents may well contain the FEND byte.
 
 The receive buffer must be large enough to fit a complete KISS frame.  The
-maximum length an AX.25 frame (ignoring AX.25 v2.2 connected mode for a
+maximum length of an AX.25 frame (ignoring AX.25 v2.2 connected mode for a
 while) is 329 bytes.  In the very unlikely case, where all bytes would be
 FEND or FESC and they would be escaped, the maximum KISS frame size in a
 buffer would be 2*329+2 = 660 bytes.  In 2020 a few kilobytes for a buffer
@@ -173,7 +173,7 @@ The KISS specification specifies that only the "Data frame" code of 0x00
 should be sent from the TNC to the host.  In practice some TNCs may well
 send other codes.  For example, the TNC3 uses 0x06 SetHardware codes to
 communicate with the configuration utility.  Those frames will at times
-accidentally be delivered to other applicatins, and they MUST ignore them
+accidentally be delivered to other applications, and they MUST ignore them
 silently.
 
 
@@ -241,7 +241,7 @@ source code in your product and distribute the product, you need to give the
 source code of your firmware out too.  This is great, since others can then
 make your hardware better and more valuable by adding features and fixing
 bugs.  Using existing source code can make your product development faster
-and since the TNC3 BLE/KISS firmware is already well tested you'll have less
+and since the TNC3 BLE/KISS firmware is already well tested you'll have fewer
 bugs when you ship!
 
 https://github.com/mobilinkd/tnc3-firmware
@@ -262,6 +262,11 @@ Client applications:
 * aprs.fi Android application
 * RadioMail Winlink email app (iPhone & iPad)
 * PocketPacket APRS app (iPhone & iPad)
+
+Server applications:
+
+* [kiss-tnc-bridge](https://github.com/kotfu/kiss-tnc-bridge) - makes a
+  TCP KISS TNC available via BLE
 
 Radios and TNCs:
 
