@@ -14,6 +14,10 @@ Here are a few specifications for ham radio protocols and their extensions.
   no longer need to figure out and type IP addresses and port numbers.
   Implemented in multiple applications. The document is also useful
   for implementing other similar DNS-SD services.
+* [Specification for DNS-SD discovery of DX cluster telnet services](DX-CLUSTER-DNS-SD.md)
+  describes how DX cluster nodes, skimmers and CW decoders announce
+  their telnet spot feeds on a LAN, so that logging software can find
+  them without the user typing in IP addresses and port numbers.
 * [Specification for KISS over BLE (Bluetooth Low Energy)](BLE-KISS-API.md)
   describes how KISS frames are sent over Bluetooth 4.0 Low Energy
   (BLE), with unique service identifiers allowing packet radio

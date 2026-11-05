@@ -30,6 +30,27 @@ radio.
   * Specification: [varanny](https://github.com/islandmagic/varanny)
   * Example implementations: [varanny](https://github.com/islandmagic/varanny)
     is open source, multiplatform implementation in Go
+* DX cluster telnet spot feeds (cluster nodes, skimmers, CW decoders)
+  * Service: `_dx-cluster._tcp`
+  * Instance name: User-friendly UTF-8 encoded Unicode name of the
+    software and computer, or of the cluster node
+  * A generic service type: every server providing "DX de" spot lines
+    over the traditional telnet protocol should announce it, so that a
+    logger finds all spot sources with a single browse. DXSpider,
+    AR-Cluster, CC Cluster, CW Skimmer, Skimmer Server and the RBN
+    Aggregator would all be welcome.
+  * Implementations: CW Whole Milk
+  * Specification: [DX-CLUSTER-DNS-SD.md](https://github.com/hessu/aprs-specs/blob/master/DX-CLUSTER-DNS-SD.md)
+* CW Whole Milk streaming API
+  * Service: `_wholemilk-api._tcp`
+  * Instance name: "CW Whole Milk on" followed by the computer's name
+  * Protocol: decoded CW and CQ frequency holders as JSON events over a
+    WebSocket, with plain HTTP on the same port. The OpenAPI definition
+    of the server is served from the port itself.
+  * TXT: `ver` is the stream's protocol version (currently `1`), `path`
+    the WebSocket path (`/api/v1/stream`), `spec` the path of the OpenAPI
+    document (`/openapi.yaml`)
+  * Implementations: CW Whole Milk
 
 
 Example of an user interface
