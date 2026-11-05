@@ -270,13 +270,13 @@ Server applications:
 
 Radios and TNCs:
 
-* Mobilinkd TNC3
-* Mobilinkd TNC4
+* Mobilinkd TNC3, Mobilinkd TNC4
 * PicoAPRS v4 transceiver
 * RPC Electronics ESP32-APRS Tracker
 * Richonguzman / CA2RXU LoRa APRS Tracker on TGO T-Beam and LoRa32v2.1 boards
 * [B.B. Link Adapter](https://getbblink.com) for Kenwood TH-D74/5 radios
 * Vero VGC VR-N76, BTECH UV-PRO, Radioddity GA-5WB FM+APRS dual band HT
+* Ailunce HA2 dual band HT
 * [kiss-ble-uart-tnc](https://github.com/tomasgeci/kiss-ble-uart-tnc) for
   building an BLE - UART adapter yourself
 
